@@ -1,31 +1,15 @@
-// server.js
-import { createServer } from "http";
+// index.js — Express.js Server (Preview)
+import express from "express";
+import "dotenv/config";
+const app = express();
+const PORT = process.env.PORT;
 
-const server = createServer((req, res) => {
-  const { method, url } = req;
+app.use(express.json()); // Middleware: แปลง JSON
 
-  res.setHeader("Content-Type", "application/json");
-
-  if (method === "GET" && url === "/") {
-    res.writeHead(200);
-    res.end(
-      JSON.stringify({
-        message: "สวัสดีจาก Node.js Server!",
-      }),
-    );
-  } else if (method === "POST" && url === "/xyz") {
-    res.writeHead(200);
-    res.end(
-      JSON.stringify({
-        message: "สวัสดีจาก POST Method XYZ",
-      }),
-    );
-  } else {
-    res.writeHead(404);
-    res.end(JSON.stringify({ error: "ไม่พบหน้าที่ต้องการ" }));
-  }
+// Routes
+app.get("/", (req, res) => {
+  res.json({ message: "สวัสดีจาก Express.js!" });
 });
-
-server.listen(3000, () => {
-  console.log("Server รันอยู่ที่ http://localhost:3000");
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
